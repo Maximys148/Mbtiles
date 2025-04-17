@@ -1,0 +1,12 @@
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+  jpa:
+    hibernate:
+      ddl-auto: validate
+server:
+  port: 8111
+mbTiles:
+  filePath: "${filePath:C://JAVA/MbtilesFile/OSM-OpenCPN2-MagellanStrait.mbtiles}"
+  filePathToSave: "${filePath:C:/JAVA/MbtilesFileToSave}"
