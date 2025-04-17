@@ -21,19 +21,21 @@ import java.nio.file.Path;
 @RequestMapping("/tiles")
 public class TileController {
 
-    @Autowired
+
     private final TileService tileService;
 
+    @Autowired
     public TileController(TileService tileService) {
         this.tileService = tileService;
     }
+
 
     @GetMapping("/getTile/{z}/{x}/{y}")
     public ResponseEntity<?> getTile(@PathVariable int z, @PathVariable int x, @PathVariable int y) {
         return tileService.getTiles(z, x, y);
     }
-    @PostMapping("/createMbtiles")
-    public ResponseEntity<String> uploadMbTiles(@RequestParam("file") MultipartFile file) {
-        return tileService.createMbtiles(file);
+    @PostMapping("/loadMbtiles")
+    public ResponseEntity<String> loadMbtiles(@RequestBody MultipartFile file) {
+        return tileService.loadMbtiles(file);
     }
 }

@@ -2,6 +2,7 @@ package com.maximys.mbtiles.service;
 
 import jakarta.annotation.PostConstruct;
 import org.imintel.mbtiles4j.*;
+import org.imintel.mbtiles4j.model.MetadataEntry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,9 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 @Service
 public class TileService {
@@ -56,27 +55,28 @@ public class TileService {
             throw new RuntimeException(e);
         }
     }
-    public ResponseEntity<String> createMbtiles(MultipartFile file){
-        /*MBTilesWriter w = new MBTilesWriter(file);
-        String contentType = file.getContentType();
-        file.getOriginalFilename();
+    public ResponseEntity<String> loadMbtiles(MultipartFile newFile){
+        try {
+            File file1 = new File(mbTilesFilePathToSave + newFile.getOriginalFilename());
+            OutputStream outputStream = new FileOutputStream(file1);
+            outputStream.write(newFile.getInputStream().readAllBytes());
+            outputStream.close();
+            file = new MBTilesReader(file1);
+            return ResponseEntity.ok("Файл сохранён");
+        } catch (IOException | MBTilesReadException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ошибка в чтении файла");
+        }
 
-         */
-
-        return null;
-    }
-    /*MBTilesWriter w = new MBTilesWriter(new File("example.mbtiles"));
-    MetadataEntry ent = new MetadataEntry();
-//Add metadata parts
-ent.setTilesetName("An example Tileset")
+        /*ent.setTilesetName("An example Tileset")
         .setTilesetType(MetadataEntry.TileSetType.BASE_LAYER)
-	.setTilesetVersion("0.2.0")
-	.setTilesetDescription("An example tileset description")
-	.setTileMimeType(MetadataEntry.TileMimeType.PNG)
-	.setAttribution("Tiles are Open Source!")
-	.setTilesetBounds(-180, -85, 180, 85);
-w.addMetadataEntry(ent);
-//add someTile at Zoom (0), Column(0), Row (0)
-w.addTile(someTileBytes, 0, 0, 0);
-    File result = w.close();*/
+        .setTilesetVersion("0.2.0")
+        .setTilesetDescription("An example tileset description")
+        .setTileMimeType(MetadataEntry.TileMimeType.PNG)
+        .setAttribution("Tiles are Open Source!")
+        .setTilesetBounds(-180, -85, 180, 85);
+        w.addMetadataEntry(ent);
+        w.addTile(someTileBytes, 0, 0, 0);
+       File result = w.close();*/
+    }
+
 }

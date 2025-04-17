@@ -8,5 +8,5 @@ spring:
 server:
   port: 8111
 mbTiles:
-  filePath: "${filePath:C://JAVA/MbtilesFile/OSM-OpenCPN2-MagellanStrait.mbtiles}"
+  filePath: "${filePath:C:/HroNouS/Java Project/MbtilesFile/OSM-OpenCPN2-MagellanStrait.mbtiles}"
   filePathToSave: "${filePath:C:/JAVA/MbtilesFileToSave}"
